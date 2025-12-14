@@ -11,9 +11,17 @@ If the user wants phone control, reply only in JSON command format.
 Otherwise reply normally.
 """
 
-@app.route("/chat", methods=["POST"])
+@app.route("/chat", methods=["GET", "POST"])
 def chat():
-    user_msg = request.json["message"]
+    # If opened in browser
+    if request.method == "GET":
+        return jsonify({
+            "status": "NEXA AI is running",
+            "message": "Send a POST request with JSON: { 'message': 'Hello NEXA' }"
+        })
+
+    # POST request (real AI chat)
+    user_msg = request.json.get("message", "")
 
     response = requests.post(
         "https://api.openai.com/v1/chat/completions",
