@@ -1,3 +1,13 @@
+@app.route("/")
+def home():
+    return """
+    <h2>NEXA AI Backend is Running</h2>
+    <form method="post" action="/chat">
+      <input name="message" placeholder="Type message">
+      <button type="submit">Send</button>
+    </form>
+    """
+
 from flask import Flask, request, jsonify
 import requests, os, json
 
